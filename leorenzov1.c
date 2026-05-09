@@ -1,16 +1,22 @@
 #include "stdio.h"
+#include "stdlib.h"
+#include "time.h"
 #include "defs.h"
 #include "bitboards.c"
-#include "stdlib.h"
-#include "assert.h"
-
-#define FEN4 "r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq - 0 1"
 
 int main () {
+	S_BOARD pos[1];
 
+	srand(time(NULL));
 	AllInit();
 
+	ParseFen(START_FEN, pos);
+	PrintBoard(pos);
+	CheckBoard(pos);
 
+	printf("\nParsed FEN: %s\n\n", START_FEN);
+	printf("Side to move: %s\n", pos->side == WHITE ? "White" : "Black");
+	printf("Position key: %llX\n", pos->poskey);
 
 	return 0;
 }

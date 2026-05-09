@@ -13,6 +13,8 @@ typedef unsigned long long U64;
 
 #define START_FEN "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
 
+#define OFFBOARD 20
+
 enum { EMPTY, wP, wN, wB, wR, wQ, wK, bP, bN, bB, bR, bQ, bK };
 enum { FILE_A, FILE_B, FILE_C, FILE_D, FILE_E, FILE_F, FILE_G, FILE_H, FILE_NONE };
 enum { RANK_1, RANK_2, RANK_3, RANK_4, RANK_5, RANK_6, RANK_7, RANK_8, RANK_NONE };
@@ -103,7 +105,7 @@ extern int PieceVal[13];
 extern int PieceCol[13];
 
 extern int FilesBrd[BRD_SQ_NUM];
-extern int RankBrd[BRD_SQ_NUM];
+extern int RanksBrd[BRD_SQ_NUM];
 
 
 /* FUNCTIONS */
@@ -125,7 +127,7 @@ extern U64 GeneratePosKey(const S_BOARD *pos);
 extern void ResetBoard(S_BOARD *pos);
 extern int ParseFen(char *fen, S_BOARD *pos);
 extern void PrintBoard(const S_BOARD *pos);
-extern void UpdateListsMaterial(S_BOARD *pos);
+extern void UpdateListMaterial(S_BOARD *pos);
 extern int CheckBoard(const S_BOARD *pos);
 
 

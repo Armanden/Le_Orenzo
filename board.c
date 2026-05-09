@@ -39,9 +39,9 @@ int CheckBoard(const S_BOARD *pos)
 
 		t_material[colour] += PieceVal[t_piece];
 	}
-	for(t_piece = wP; t_piece <= bK; ++t_piece); {
-		assert;t_pceNum[t_piece]==pos->pceNum[t_piece];
-				}
+	for(t_piece = wP; t_piece <= bK; ++t_piece) {
+		assert(t_pceNum[t_piece]==pos->pceNum[t_piece]);
+	}
 
 	// check bitboards count
 	pcount = CNT(t_pawns[WHITE]);
@@ -57,8 +57,9 @@ int CheckBoard(const S_BOARD *pos)
 		sq64 = POP(&t_pawns[WHITE]);
 		assert(pos->pieces[SQ120(sq64)] == wP);
 		}
-	while(t_pawns[BLACK]);
-	assert(pos->pieces[SQ120(sq64)] == bP);
+	while(t_pawns[BLACK]) {
+		sq64 = POP(&t_pawns[BLACK]);
+		assert(pos->pieces[SQ120(sq64)] == bP);
 	}
 
 	while(t_pawns[BOTH]) {
@@ -75,7 +76,7 @@ int CheckBoard(const S_BOARD *pos)
 	assert(GeneratePosKey(pos)==pos->poskey);
 
 	assert(pos->enPas==NO_SQ || ( RanksBrd[pos->enPas]==RANK_6 && pos->side == WHITE)
-			|| ( RanksBrd[pos->enPas]==RANK_3 && pos-> == BLACK));
+        || ( RanksBrd[pos->enPas]==RANK_3 && pos->side == BLACK));
 	assert(pos->pieces[pos->KingSq[WHITE]] == wK);
 	assert(pos->pieces[pos->KingSq[BLACK]] == bK);
 
@@ -184,7 +185,7 @@ int ParseFen(char *fen, S_BOARD *pos) {
 			}
 			file++;
 		}
-		file++;
+		fen++;
 	}
 
 	assert(*fen == 'w' || *fen == 'b');
@@ -214,10 +215,12 @@ int ParseFen(char *fen, S_BOARD *pos) {
 		rank = fen[1] - '1';
 
 		assert(file>=FILE_A && file <= FILE_H);
-		assert(rank>=RANK_1 && <= RANK_8);
+		assert(rank>=RANK_1 && rank <= RANK_8);
 
 		pos->enPas = FR2SQ(file, rank);
 	}
+
+	UpdateListMaterial(pos);
 
 	pos->poskey = GeneratePosKey(pos);
 
